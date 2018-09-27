@@ -1,0 +1,89 @@
+#### groups.yaml ####
+
+######################## VIEWS (Tabs) ########################
+## DEFUALT VIEW - HOME##
+
+default_view:
+  name: Home
+  view: yes
+  entities:
+          #    - weather.yweather
+    - sensor.yr
+    - device_tracker.john
+    - device_tracker.chrishome
+    - group.trackeddevices
+      # - group.quickweather
+    - group.weather
+    - group.floorplan
+
+
+## OTHER TABS (VIEWS) ##
+environment_view:
+  name: Meteo
+  view: yes
+  entities:
+    - group.YahooENV
+    - camera.Meteogram
+    - group.weather
+
+security_view:
+  name: Security
+  view: yes
+  entities:
+          #    - sensor.nest_away_mode
+    - camera.seccam
+    - sensor.motion_seccam
+    - switch.seccam_motion
+      #    - group.alarm
+      #    - group.motion_sensors
+
+living_room_view:
+  name: Living Room
+  view: yes
+  entities:
+    - media_player.liveboxplaytv
+    - media_player.webostv
+
+######################## GROUPS (Cards) ########################
+seccam:
+  name: Security Camera
+  entities:
+    - camera.seccam
+
+trackeddevices:
+  name: People
+  view: no
+  entities:
+    - sensor.john_status
+    - sensor.chris_status
+
+QuickWeather:
+  name: Meteo
+  entities:
+    - sensor.yw_day1_condition
+    - sensor.yw_day1_temperature
+    - sensor.yw_day2_condition
+    - sun.sun
+
+YahooENV:
+  name: Yahoo Meteo
+  entities:
+    - sensor.yw_day1_condition
+    - sensor.yw_day1_temperature_max
+    - sensor.yw_day1_temperature_min
+    - sensor.yw_day2_condition
+    - sensor.yw_day2_temperature_max
+    - sensor.yw_day2_temperature_min
+    - sensor.yw_day3_condition
+    - sensor.yw_day3_temperature_max
+    - sensor.yw_day3_temperature_min
+    
+weather:
+  name: Meteo
+  entities:
+    - input_boolean.weather
+    
+floorplan:
+  name: Floorplan
+  entities:
+    - binary_sensor.floorplan

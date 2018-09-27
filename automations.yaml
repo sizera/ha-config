@@ -1,0 +1,161 @@
+- id: '1536588493629'
+  alias: Motion_seccam_detected
+  trigger:
+  - entity_id: sensor.motion_seccam
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.johnhome
+    state: away
+  action:
+  - data:
+      data:
+        document:
+          caption: Seccam a détécté un mouvement
+          file: /tmp/seccam.gif
+      message: Seccam a détécté un mouvement
+    service: notify.telegram_john
+
+- alias: Mark John as just arrived
+  trigger:
+    - platform: state
+      entity_id: device_tracker.johnhome
+      from: 'not_home'
+      to: 'home'
+    - platform: zone
+      entity_id: device_tracker.john
+      zone: zone.home
+      event: enter
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.john_status_dropdown
+        option: Vient d arriver
+ 
+- alias: Mark John as home
+  trigger:
+    - platform: state
+      entity_id: input_select.john_status_dropdown
+      to: 'Vient d arriver'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.john_status_dropdown
+      from: 'Vient de partir'
+      to: 'Vient d arriver'
+  condition:
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.john_status_dropdown
+        option: A la Maison
+ 
+- alias: Mark John as just left
+  trigger:
+    - platform: state
+      entity_id: device_tracker.johnhome
+      from: 'home'
+      to: 'not_home'
+    - platform: zone
+      entity_id: device_tracker.john
+      zone: zone.home
+      event: leave
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.john_status_dropdown
+        option: Vient de partir
+ 
+- alias: Mark John as away
+  trigger:
+    - platform: state
+      entity_id: input_select.john_status_dropdown
+      to: 'Vient de partir'
+      for:
+        minutes: 10
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.john_status_dropdown
+        option: A l exterieur
+ 
+- alias: Mark John as at work
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.john
+      zone: zone.work_john
+      event: enter
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.john_status_dropdown
+        option: Au Travail
+
+- alias: Mark John as at work
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.john
+      zone: zone.work_john
+      event: leave
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.john_status_dropdown
+        option: A l exterieur
+
+- alias: Mark Chris as just arrived
+  trigger:
+    - platform: state
+      entity_id: device_tracker.chrishome
+      from: 'not_home'
+      to: 'home'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.chris_status_dropdown
+        option: Vient d arriver
+ 
+- alias: Mark Chris as home
+  trigger:
+    - platform: state
+      entity_id: input_select.chris_status_dropdown
+      to: 'Vient d arriver'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.chris_status_dropdown
+      from: 'Vient de partir'
+      to: 'Vient d arriver'
+  condition:
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.chris_status_dropdown
+        option: A la Maison
+ 
+- alias: Mark Chris as just left
+  trigger:
+    - platform: state
+      entity_id: device_tracker.chrishome
+      from: 'home'
+      to: 'not_home'
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.chris_status_dropdown
+        option: Vient de partir
+ 
+- alias: Mark Chris as away
+  trigger:
+    - platform: state
+      entity_id: input_select.chris_status_dropdown
+      to: 'Vient de partir'
+      for:
+        minutes: 10
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.chris_status_dropdown
+        option: A l exterieur

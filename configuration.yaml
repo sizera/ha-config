@@ -1,0 +1,192 @@
+homeassistant:
+  customize: !include customize.yaml
+  latitude: !secret latitude_home
+  longitude: !secret longitude_home
+  elevation: 95
+  name: Home
+  temperature_unit: C
+  time_zone: Europe/Paris
+  unit_system: metric
+  whitelist_external_dirs:
+          - '/tmp'
+
+updater:
+  include_used_components: true
+
+#python_script:
+weather:
+  - platform: yweather
+
+zone:
+  - name: home
+    latitude: !secret latitude_home
+    longitude: !secret longitude_home
+    radius: 80
+    icon: mdi:home
+  - name: Work John
+    latitude: !secret latitude_work_john
+    longitude: !secret longitude_work_john
+    radius: 100
+    icon: mdi:work
+  - name: Work Chris
+    latitude: !secret latitude_work_chris
+    longitude: !secret longitude_work_chris
+    radius: 100
+    icon: mdi:castle
+
+#zwave:
+#  usb_path: /dev/ttyACM0
+#  network_key: !secret zwave_network_key
+
+media_extractor:
+
+# Enables configuration UI
+config:
+
+frontend:
+  javascript_version: auto
+  extra_html_url:
+    - /local/custom_ui/custom-weather-card.html
+    - /local/custom_ui/state-card-floorplan.html
+  extra_html_url_es5:
+    - /local/custom_ui/custom-weather-card.html
+  #themes: !include includes/themes.yaml
+
+map:
+downloader:
+  download_dir: downloads
+
+http:
+  api_password: !secret http_password
+  base_url: !secret base_url
+  server_port: !secret base_port
+  ip_ban_enabled: True
+  login_attempts_threshold: 2
+  use_x_forwarded_for: True
+  trusted_networks:
+    - 192.168.1.0/24
+    - 127.0.0.1
+    - ::1
+  trusted_proxies:
+    - 192.168.1.17
+    - 127.0.0.1
+    - ::1
+
+discovery:
+
+conversation:
+ffmpeg:
+
+telegram_bot:
+  platform: polling
+  api_key: !secret telegram_key
+  allowed_chat_ids:
+    - !secret telegram_chatID_Alok
+
+notify:
+  - platform: pushbullet
+    api_key: !secret pushbullet_key
+    name: pushbullet
+  - name: telegram_john
+    platform: telegram
+    api_key: !secret telegram_key
+    chat_id: !secret telegram_chatID_Alok
+  - platform: command_line
+    name: 'Echo Dot'
+    command: "/home/homeassistant/.homeassistant/shell_scripts/alexa_wrapper.sh -d 'Echo Dot Gen2'"
+  - platform: webostv 
+    host: 192.168.1.15
+    name: webostv
+
+logger:
+  default: error
+  logs:
+    homeassistant.components.image_processing: critical
+    homeassistant.components.camera.synology: critical
+    homeassistant.components.camera.generic: critical
+    homeassistant.components.sensor.wunderground: critical
+    homeassistant.components.sensor.pi_hole: critical
+    homeassistant.components.media_player.plex: critical
+    homeassistant.components.telegram_bot: critical
+    homeassistant.components.sensor.darksky: critical
+    homeassistant.helpers.entity: critical
+    homeassistant.components.http.ban: warning
+    homeassistant.components.python_script: warning
+    homeassistant.components.http.view: info
+
+tts:
+  - platform: google
+    cache: true
+    cache_dir: /home/homeassistant/.homeassistant/tts
+    time_memory: 300
+
+sun:
+
+remote:
+
+        #google:
+        #  client_id: !secret gcal_client_id
+        #  client_secret: !secret gcal_client_secret
+
+mqtt:
+  broker: 127.0.0.1
+  port: 1883
+  client_id: home-assistant-1
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+cloud:
+dialogflow:
+#intent_script: !include intent_script.yaml
+#ios: !include ios.yaml
+#alert: !include alert.yaml
+automation: !include automations.yaml
+#cover: !include cover.yaml
+group: !include groups.yaml
+script: !include scripts.yaml
+sensor: !include sensor.yaml
+switch: !include switches.yaml
+binary_sensor: !include binary_sensor.yaml
+input_select: !include input_select.yaml
+input_boolean: !include input_boolean.yaml
+#input_number: !include input_number.yaml
+#input_text: !include input_text.yaml
+#frontend: !include frontend.yaml
+#recorder: !include recorder.yaml
+#logbook: !include logbook.yaml
+#history: !include history.yaml
+panel_custom: !include panel_custom.yaml
+
+media_player: !include media_players.yaml
+
+camera:
+  - platform: generic
+    still_image_url: !secret meteogram_png_url
+    name: meteogram
+    content_type: 'image/svg+xml'
+  - platform: generic
+    still_image_url: !secret seccam_image_url
+    name: seccam
+    username: !secret seccam_user
+    password: !secret seccam_pwd
+  
+device_tracker:
+  - platform: gpslogger
+    password: !secret gpslogger_password
+  - platform: nmap_tracker
+    hosts: 192.168.1.0/24
+    exclude:
+      - 192.168.1.11
+      - 192.168.1.17
+      - 192.168.1.18
+      - 192.168.1.15
+      - 192.168.1.25
+      - 192.168.1.41
+
+scene: !include scenes.yaml
+
+panel_iframe:
+  configurator:
+    title: Editeur de Conf
+    icon: mdi:wrench
+    url: !secret configurator_url

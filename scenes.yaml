@@ -1,0 +1,5 @@
+  - name: change PS4
+    entities:
+      media_player.webostv:
+        state: on
+        source: Console de jeu

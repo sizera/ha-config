@@ -1,0 +1,21 @@
+  john_status_dropdown:
+    name: John
+    options:
+      - A la Maison
+      - Vient d arriver
+      - Vient de partir
+      - A l exterieur
+      - En voyage
+      - Au Travail
+    initial: A l exterieur
+
+  chris_status_dropdown:
+    name: Chris
+    options:
+      - A la Maison
+      - Vient d arriver
+      - Vient de partir
+      - A l exterieur
+      - En voyage
+      - Au Travail
+    initial: A l exterieur
