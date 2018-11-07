@@ -3,3 +3,10 @@
       media_player.webostv:
         state: on
         source: Console de jeu
+
+  - name: Open the storebanne
+    entities:
+      cover.store_cover: open
+  - name: Close the storebanne
+    entities:
+      cover.store_cover: closed

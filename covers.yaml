@@ -1,0 +1,42 @@
+  - platform: template
+    covers:
+      seccam_cover:
+        friendly_name: "Mouvements Seccam"
+        position_template: "50"
+        open_cover:
+          service: script.upseccam
+        close_cover:
+          service: script.downseccam 
+         
+  - platform: template
+    covers:
+      store_cover:
+        friendly_name: "Store Cover"
+        position_template: "{{ (((states.input_number.store_position.state | int) * 100)/60 | int) }}"
+        open_cover:
+          - service: mqtt.publish
+            data:
+              topic: 'cmnd/sonoff/power2'
+              payload: 'OFF'
+          - service: mqtt.publish
+            data:
+              topic: 'cmnd/sonoff/power1'
+              payload: 'ON'
+        close_cover:
+          - service: mqtt.publish
+            data:
+              topic: 'cmnd/sonoff/power1'
+              payload: 'OFF'
+          - service: mqtt.publish
+            data:
+              topic: 'cmnd/sonoff/power2'
+              payload: 'ON'
+        stop_cover:
+          - service: mqtt.publish
+            data:
+              topic: 'cmnd/sonoff/power1'
+              payload: 'OFF'
+          - service: mqtt.publish
+            data:
+              topic: 'cmnd/sonoff/power2'
+              payload: 'OFF' 

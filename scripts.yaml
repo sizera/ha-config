@@ -1,0 +1,83 @@
+  updatetracker:
+    alias: 'Update tracker'
+    sequence:
+      - service: python_script.meta_device_tracker
+        data_template:
+          entity_id: '{{entityid}}'
+      # - condition: template
+      #   value_template: '{{fromstate != tostate}}'
+      - service: logbook.log
+        data_template:
+          name: "Tracker updated: "
+          message: >-
+            {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }} is {{ tostate }} at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
+            
+  downseccam:
+    alias: 'Down Seccam'
+    sequence:
+      - service: shell_command.move_camera
+        data_template:
+          action: 'down'
+          ip_address: !secret seccam_ip
+          port: !secret seccam_port
+          user: !secret seccam_user
+          password: !secret seccam_pwd
+      - service: notify.telegram_john
+        data:
+          message: Activation de Secaam
+  upseccam:
+    alias: 'Up Seccam'
+    sequence:
+      - service: shell_command.move_camera
+        data_template:
+          action: 'up'
+          ip_address: !secret seccam_ip
+          port: !secret seccam_port
+          user: !secret seccam_user
+          password: !secret seccam_pwd
+      - service: notify.telegram_john
+        data:
+          message: Desactivation de Secaam
+          
+  testtts:
+    alias: "Test tts"
+    sequence:
+      - service: tts.google_say
+        entity_id: media_player.webostv
+        data:
+          message: "Bonjour Lucas!"
+          language: "fr"
+    
+      - service: notify.webostv
+        data:
+          message: "Merci, la télé n'a pas parlé? Fait un signe"
+
+  initialize_hass:
+    alias: 'Initialize HASS after restart'
+    sequence:
+      - service: script.updatetracker
+        data_template:
+          entityid: 'device_tracker.johnhome'
+          fromstate: '{{states.device_tracker.johnhome.state}}'
+          tostate: '{{states.device_tracker.johnhome.state}}'
+      - service: script.updatetracker
+        data_template:
+          entityid: 'device_tracker.john'
+          fromstate: '{{states.device_tracker.john.state}}'
+          tostate: '{{states.device_tracker.john.state}}'
+      - service: script.updatetracker
+        data_template:
+          entityid: 'device_tracker.chris'
+          fromstate: '{{states.device_tracker.chris.state}}'
+          tostate: '{{states.device_tracker.chris.state}}'
+      - service: script.updatetracker
+        data_template:
+          entityid: 'device_tracker.chrishome'
+          fromstate: '{{states.device_tracker.chrishome.state}}'
+          tostate: '{{states.device_tracker.chrishome.state}}'
+      - service: script.updatetracker
+        data_template:
+          entityid: 'device_tracker.chris1home'
+          fromstate: '{{states.device_tracker.chris1home.state}}'
+          tostate: '{{states.device_tracker.chris1home.state}}'
+

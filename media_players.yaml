@@ -1,9 +1,9 @@
   - platform: liveboxplaytv
-    host: 192.168.1.11
-    port: 8080
+    host: !secret liveboxplaytv_ip
+    port: !secret liveboxplaytv_port
     name: liveboxplaytv
   - platform: webostv
-    host: 192.168.1.18
+    host: !secret webostv_ip
     name: webostv
     timeout: 5
     turn_on_action:

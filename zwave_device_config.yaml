@@ -1,0 +1,6 @@
+switch.unknown_node_2_switch:
+  ignored: false
+  polling_intensity: 0
+switch.fibaro_system_fgwpef_wall_plug_switch:
+  ignored: false
+  polling_intensity: 5

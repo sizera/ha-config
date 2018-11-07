@@ -1,0 +1,2 @@
+  move_camera: bash /home/homeassistant/.homeassistant/scripts/move_camera.sh {{ action }} {{ ip_address }} {{ port }} {{ user }} {{ password }}
+  

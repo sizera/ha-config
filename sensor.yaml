@@ -2,34 +2,6 @@
     state_topic: "homeassistant/seccam/motion_sensor"
     name: "motion_seccam"
 
-  - platform: yweather
-    woeid: 615134
-    #    forecast: 1
-    name: yw_day1
-    monitored_conditions:
-      - weather
-      - temp_min
-      - temp_max
-      - weather_current
-      - temperature
-
-  - platform: yweather
-    woeid: 615134
-    forecast: 1
-    name: yw_day2
-    monitored_conditions:
-      - weather
-      - temp_min
-      - temp_max
-
-  - platform: yweather
-    woeid: 615134
-    forecast: 2
-    name: yw_day3
-    monitored_conditions:
-      - weather
-      - temp_min
-      - temp_max
   - platform: time_date
     display_options:
       - time
@@ -42,3 +14,28 @@
       chris_status:
         value_template: '{{ states.input_select.chris_status_dropdown.state }}'
         friendly_name: 'Chris'
+      colette_status:
+        value_template: '{{ states.input_select.colette_status_dropdown.state }}'
+        friendly_name: 'Colette'
+      cyril_status:
+        value_template: '{{ states.input_select.cyril_status_dropdown.state }}'
+        friendly_name: 'Cyril'
+      daniel_status:
+        value_template: '{{ states.input_select.daniel_status_dropdown.state }}'
+        friendly_name: 'Daniel'
+        
+  - platform: synologydsm
+    name: dsjcrl
+    host: !secret syno_ip
+    port: !secret syno_port
+    username: !secret syno_user
+    password: !secret syno_pwd
+    ssl: False
+    monitored_conditions:
+      - volume_percentage_used
+      - cpu_total_load
+      - memory_real_usage
+      - network_up
+      - disk_status
+      - volume_status
+      - disk_smart_status

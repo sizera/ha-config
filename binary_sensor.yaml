@@ -1,3 +1,88 @@
   - platform: mqtt
     state_topic: dummy/floorplan/sensor
     name: Floorplan
+
+  - platform: bayesian
+    prior: 0.5
+    name: 'Chris Presence'
+    probability_threshold: 0.9
+    observations:
+      - entity_id: 'device_tracker.chrishome'
+        prob_given_true: 0.9
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.chris1home'
+        prob_given_true: 0.9
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.chris'
+        prob_given_true: 0.9
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
+
+  - platform: bayesian
+    prior: 0.5
+    name: 'John Presence'
+    probability_threshold: 0.9
+    observations:
+      - entity_id: 'device_tracker.johnhome'
+        prob_given_true: 0.9
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.john'
+        prob_given_true: 0.9
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
+
+  - platform: bayesian
+    prior: 0.5
+    name: 'Colette Presence'
+    probability_threshold: 0.9
+    observations:
+      - entity_id: 'device_tracker.iphonedecolette1home'
+        prob_given_true: 0.9
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.iphonedecolettehome'
+        prob_given_true: 0.9
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
+
+  - platform: bayesian
+    prior: 0.5
+    name: 'Daniel Presence'
+    probability_threshold: 0.9
+    observations:
+      - entity_id: 'device_tracker.daniel1home'
+        prob_given_true: 0.9
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.danielhome'
+        prob_given_true: 0.9
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
+
+  - platform: bayesian
+    prior: 0.5
+    name: 'Cyril Presence'
+    probability_threshold: 0.9
+    observations:
+      - entity_id: 'device_tracker.iphonedecyrilhome'
+        prob_given_true: 0.9
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.iphonedecyrilhome_2'
+        prob_given_true: 0.9
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'

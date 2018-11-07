@@ -1,6 +1,7 @@
       name: Demo Floorplan
       image: /local/custom_ui/floorplan/floorplan.svg
       stylesheet: /local/custom_ui/floorplan/floorplan.css
+      pan_zoom:
       
       # These options are optional
       # warnings:                  # enable warnings (to find out why things might ot be working correctly)
@@ -10,6 +11,7 @@
       
       last_motion_entity: sensor.template_last_motion
       last_motion_class: last-motion
+      
 
       groups:
 #

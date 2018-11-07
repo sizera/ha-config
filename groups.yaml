@@ -9,20 +9,20 @@ default_view:
   entities:
           #    - weather.yweather
     - sensor.yr
-    - device_tracker.john
-    - device_tracker.chrishome
     - group.trackeddevices
       # - group.quickweather
     - group.weather
     - group.floorplan
-
+    - group.synology
+    - group.trackeditestdevices
+    - group.zwave
+    - group.store_cover
 
 ## OTHER TABS (VIEWS) ##
 environment_view:
   name: Meteo
   view: yes
   entities:
-    - group.YahooENV
     - camera.Meteogram
     - group.weather
 
@@ -33,22 +33,22 @@ security_view:
           #    - sensor.nest_away_mode
     - camera.seccam
     - sensor.motion_seccam
-    - switch.seccam_motion
-      #    - group.alarm
-      #    - group.motion_sensors
+    - group.seccam
+    - group.trackedbayesiandevices
 
 living_room_view:
   name: Living Room
+  control: hidden
   view: yes
   entities:
     - media_player.liveboxplaytv
     - media_player.webostv
 
 ######################## GROUPS (Cards) ########################
-seccam:
-  name: Security Camera
-  entities:
-    - camera.seccam
+#seccam:
+  #name: Security Camera
+  #entities:
+   # - camera.seccam
 
 trackeddevices:
   name: People
@@ -56,29 +56,71 @@ trackeddevices:
   entities:
     - sensor.john_status
     - sensor.chris_status
+    - sensor.colette_status
+    - sensor.daniel_status
 
-QuickWeather:
-  name: Meteo
+trackeditestdevices:
+  name: A la Maison
+  view: no
   entities:
-    - sensor.yw_day1_condition
-    - sensor.yw_day1_temperature
-    - sensor.yw_day2_condition
-    - sun.sun
+    - device_tracker.meta_john
+    - device_tracker.meta_chris
 
-YahooENV:
-  name: Yahoo Meteo
+trackedbayesiandevices:
+  name: Presences Devices
+  view: no
   entities:
-    - sensor.yw_day1_condition
-    - sensor.yw_day1_temperature_max
-    - sensor.yw_day1_temperature_min
-    - sensor.yw_day2_condition
-    - sensor.yw_day2_temperature_max
-    - sensor.yw_day2_temperature_min
-    - sensor.yw_day3_condition
-    - sensor.yw_day3_temperature_max
-    - sensor.yw_day3_temperature_min
+    - device_tracker.john_bayesian
+    - device_tracker.chris_bayesian
+
+trackedpeopledevices:
+  name: People Devices
+  view: no
+  entities:
+    - device_tracker.john_bayesian
+    - device_tracker.chrishome
+    - device_tracker.chris1home
+    - device_tracker.chris
+
+christrackers:
+  name: Chris Trackers
+  view: no
+  entities:
+    - device_tracker.chrishome
+    - device_tracker.chris1home
+    - device_tracker.chris
+    
+danieltrackers:
+  name: Daniel Trackers
+  view: no
+  entities:
+    - device_tracker.danielhome
+    - device_tracker.daniel11home
+    
+colettetrackers:
+  name: Colette Trackers
+  view: no
+  entities:
+    - device_tracker.iphonedecolettehome
+    - device_tracker.iphonedecolette1home
+    
+cyriltrackers:
+  name: Cyril Trackers
+  view: no
+  entities:
+    - device_tracker.iphonedecyrilhome
+    - device_tracker.iphonedecyrilhome_2
+
+tele:
+  name: Tele
+  control: hidden
+  view: no
+  entities:
+    - media_player.liveboxplaytv
+    - media_player.webostv
     
 weather:
+  control: hidden
   name: Meteo
   entities:
     - input_boolean.weather
@@ -87,3 +129,45 @@ floorplan:
   name: Floorplan
   entities:
     - binary_sensor.floorplan
+    
+seccam:
+  name: Controle de Seccam
+  control: hidden
+  view: no
+  entities:
+    - switch.seccam_motion
+    - cover.seccam_cover
+
+synology:
+  name: DSJCRL
+  entities:
+      - sensor.cpu_load_total
+      - sensor.memory_usage_real
+      - sensor.network_up
+      - sensor.disk_sda
+      - sensor.disk_sdb
+      - sensor.disk_sdc
+      - sensor.disk_sdd
+      - sensor.disk_volume1
+      - sensor.disk_volume2
+      - sensor.disk_volume3
+      - sensor.status_smart_sda
+      - sensor.status_smart_sdb
+      - sensor.status_smart_sdc
+      - sensor.status_smart_sdd
+
+zwave:
+  name: Zwave
+  entities:
+    - zwave.aeotec_dsa02203_zstick_s2
+    - switch.fibaro_system_fgwpef_wall_plug_switch
+    - zwave.unknown_node_2
+    
+store_cover:
+  name: Store Cover
+  entities:
+  - cover.store_cover
+  - input_number.store_set_position
+  - input_number.store_position
+  - timer.store_up
+  - timer.store_down

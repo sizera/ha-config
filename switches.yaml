@@ -3,7 +3,24 @@
     #Switch for seccam Motion Detection
     seccam_motion:
       friendly_name: "Detection de mouvement"
-      command_on: '/home/homeassistant/.homeassistant/scirpts/gestion_camera.sh on'
-      command_off: '/home/homeassistant/.homeassistant/scirpts/gestion_camera.sh off'
-      command_state: '/home/homeassistant/.homeassistant/scirpts/gestion_camera.sh state'
+      command_on: '/home/homeassistant/.homeassistant/scripts/gestion_camera.sh on'
+      command_off: '/home/homeassistant/.homeassistant/scripts/gestion_camera.sh off'
+      command_state: '/home/homeassistant/.homeassistant/scripts/gestion_camera.sh state'
       value_template: '{{ value == "1" }}'
+    seccam_move:
+      friendly_name: "Deplacement de camera"
+      command_on: '/home/homeassistant/.homeassistant/scripts/gestion_camera.sh down'
+      command_off: '/home/homeassistant/.homeassistant/scripts/gestion_camera.sh up'
+
+- platform: template
+  switches:
+    storebanne:
+      value_template: "{{ is_state('input_number.store_position', '60') }}"
+      turn_on:
+        service: cover.open_cover
+        data:
+          entity_id: cover.store_cover
+      turn_off:
+        service: cover.close_cover
+        data:
+          entity_id: cover.store_cover

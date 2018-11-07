@@ -13,7 +13,7 @@ homeassistant:
 updater:
   include_used_components: true
 
-#python_script:
+python_script:
 weather:
   - platform: yweather
 
@@ -34,9 +34,9 @@ zone:
     radius: 100
     icon: mdi:castle
 
-#zwave:
-#  usb_path: /dev/ttyACM0
-#  network_key: !secret zwave_network_key
+zwave:
+  usb_path: /dev/zstick
+  network_key: !secret zwave_network_key
 
 media_extractor:
 
@@ -52,7 +52,7 @@ frontend:
     - /local/custom_ui/custom-weather-card.html
   #themes: !include includes/themes.yaml
 
-map:
+#map:
 downloader:
   download_dir: downloads
 
@@ -73,6 +73,11 @@ http:
     - ::1
 
 discovery:
+
+api:
+
+alexa:
+  smart_home:
 
 conversation:
 ffmpeg:
@@ -95,8 +100,12 @@ notify:
     name: 'Echo Dot'
     command: "/home/homeassistant/.homeassistant/shell_scripts/alexa_wrapper.sh -d 'Echo Dot Gen2'"
   - platform: webostv 
-    host: 192.168.1.15
+    host: !secret webostv_ip
     name: webostv
+  - name: free_mobile
+    platform: free_mobile
+    username: !secret free_mobile_username
+    access_token: !secret free_mobile_token
 
 logger:
   default: error
@@ -129,8 +138,8 @@ remote:
         #  client_secret: !secret gcal_client_secret
 
 mqtt:
-  broker: 127.0.0.1
-  port: 1883
+  broker: !secret mqtt_ip
+  port: !secret mqtt_port
   client_id: home-assistant-1
   username: !secret mqtt_username
   password: !secret mqtt_password
@@ -141,7 +150,7 @@ dialogflow:
 #ios: !include ios.yaml
 #alert: !include alert.yaml
 automation: !include automations.yaml
-#cover: !include cover.yaml
+cover: !include covers.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml
@@ -153,9 +162,10 @@ input_boolean: !include input_boolean.yaml
 #input_text: !include input_text.yaml
 #frontend: !include frontend.yaml
 #recorder: !include recorder.yaml
-#logbook: !include logbook.yaml
+logbook: !include logbook.yaml
 #history: !include history.yaml
 panel_custom: !include panel_custom.yaml
+shell_command: !include shell_command.yaml
 
 media_player: !include media_players.yaml
 
@@ -190,3 +200,42 @@ panel_iframe:
     title: Editeur de Conf
     icon: mdi:wrench
     url: !secret configurator_url
+  nodered:
+    title: Node Red
+    icon: mdi:wrench
+    url: !secret nodered_url
+  tasmoadmin:
+    title: TasmoAdmin
+    icon: mdi:home-automation
+    url: !secret tasmoadmin_url
+
+proximity:
+  john:
+    devices:
+      - device_tracker.meta_john
+    tolerance: 80
+    unit_of_measurement: m
+  chris:
+    devices:
+      - device_tracker.meta_chris
+    tolerance: 80
+    unit_of_measurement: m
+
+timer:
+  window_up:
+    duration: '00:01:00'
+  window_down:
+    duration: '00:01:00'
+
+input_number:
+  store_position:
+    name: "Store Position"
+    initial: 5
+    min: 0
+    max: 60
+  store_set_position:
+    name: "Store Set Position"
+    initial: 5
+    min: 0
+    max: 100 
+

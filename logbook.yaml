@@ -1,0 +1,30 @@
+  include:
+    domains:
+      - input_boolean
+      - input_select
+      - media_player
+      - switch
+    entities:
+      - device_tracker.meta_john
+      - device_tracker.meta_chris
+      - device_tracker.john
+      - device_tracker.johnhome
+      - device_tracker.chris
+      - device_tracker.chrishome
+  exclude:
+    domains:
+      - sun
+      - binary_sensor
+      - camera
+      - device_tracker
+      - group
+      - input_number
+      - input_text
+      - script
+      - sensor
+      - weather
+      - zone
+      - automation
+    entities:
+      - switch.auto_home
+

@@ -19,3 +19,31 @@
       - En voyage
       - Au Travail
     initial: A l exterieur
+
+  colette_status_dropdown:
+    name: Colette
+    options:
+      - A la Maison
+      - Vient d arriver
+      - Vient de partir
+      - A l exterieur
+    initial: A l exterieur
+
+  cyril_status_dropdown:
+    name: Cyril
+    options:
+      - A la Maison
+      - Vient d arriver
+      - Vient de partir
+      - A l exterieur
+    initial: A l exterieur
+
+  daniel_status_dropdown:
+    name: Daniel
+    options:
+      - A la Maison
+      - Vient d arriver
+      - Vient de partir
+      - A l exterieur
+    initial: A l exterieur
+

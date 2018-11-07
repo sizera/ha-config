@@ -22,18 +22,60 @@ sensor.yw_day3_temperature_max:
 sensor.yw_day3_temperature_min:
   friendly_name: Low Next Day
 sensor.john_status:
-  entity_picture: https://graph.facebook.com/100001047009035/picture?type=large
+  entity_picture: !secret john_picture
 sensor.chris_status:
-  entity_picture: https://graph.facebook.com/100015019603229/picture?type=large
+  entity_picture: !secret chris_picture
 input_boolean.weather:
-  custom_ui_state_card: custom-weather-card
   config:
     weather: weather.yweather
+  custom_ui_state_card: custom-weather-card
 binary_sensor.floorplan:
-  custom_ui_state_card: state-card-floorplan
   config:
-    name: Floorplan
+    name: Demo Floorplan
     image: /local/custom_ui/floorplan/floorplan.svg
     stylesheet: /local/custom_ui/floorplan/floorplan.css
+    pan_zoom:
+    last_motion_entity: sensor.template_last_motion
+    last_motion_class: last-motion
+    groups:
+    - name: Lights
+      entities:
+      - light.garden
+      - light.living_room
+      - light.laundry
+      - light.kitchen
+      - light.hall
+      - light.garage
+      - light.street
+      states:
+      - state: 'on'
+        class: light-on
+      - state: 'off'
+        class: light-off
+      action:
+        domain: homeassistant
+        service: toggle
+    - name: Cameras
+      entities:
+      - camera.seccam
+      states:
+      - state: idle
+        class: camera-idle
+    - name: Media Players
+      entities:
+      - media_player.webostv
+      states:
+      - state: 'off'
+        class: camera-off
+      - state: idle
+        class: camera-off
+      - state: paused
+        class: camera-off
+      - state: playing
+        class: camera-on
+  custom_ui_state_card: state-card-floorplan
 switch.seccam_motion:
   friendly_name: Détecteur de mouvement
+device_tracker.chrishome: {}
+switch.fibaro_system_fgwpef_wall_plug_switch:
+  friendly_name: Fibaro switch
